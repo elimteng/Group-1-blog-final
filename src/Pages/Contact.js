@@ -42,7 +42,7 @@ const Contact = () => {
     <Layout>
       {/* Page Header */}
       <PageHeader
-        title="Contact Me"
+        title="Contact Us"
         subtitle="Have questions? I have answers."
         backgroundImage="/static/img/contact-bg.jpg"
       />

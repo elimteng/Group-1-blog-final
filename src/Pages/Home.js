@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import PageHeader from "../components/PageHeader";
 import Blog from "../components/Blog";
+import Footer from "../components/Footer";
 import { fetchLimitedPosts, updatePost, deletePost } from "../api/api";
 
 const Home = () => {
@@ -59,8 +60,8 @@ const Home = () => {
   return (
     <Layout>
       <PageHeader
-        title="Weifan's Blog"
-        subtitle="A Blog About Life and Code"
+        title="Bytes Odyssey"
+        subtitle="A Blog Platform About Life and Code"
         backgroundImage="/static/img/vechicle.jpg"
       />
       <section className="container mt-4">
@@ -79,6 +80,7 @@ const Home = () => {
           ))
         )}
       </section>
+      <Footer />
     </Layout>
   );
 };

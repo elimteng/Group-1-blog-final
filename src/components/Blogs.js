@@ -83,7 +83,7 @@ const Blogs = () => {
               <PageHeader
                 title="Edit Blog"
                 subtitle="Modify your content"
-                backgroundImage="/static/img/edit-bg.jpg"
+                backgroundImage="/static/img/antique.jpeg"
               />
               <section className="container mt-4">
                 <form>
@@ -144,7 +144,7 @@ const Blogs = () => {
               <PageHeader
                 title={blog.title}
                 subtitle={blog.subtitle}
-                backgroundImage="/static/img/blog-bg.jpg"
+                backgroundImage="/static/img/read.jpeg"
               />
               <section className="container mt-4">
                 <p className="text-muted">{new Date(blog.createdAt).toLocaleString()}</p>

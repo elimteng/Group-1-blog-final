@@ -3,17 +3,17 @@ import React from "react";
 const Footer = () => {
   const socialLinks = [
     {
-      href: "https://www.instagram.com/lhq5520/",
-      iconClass: "fab fa-instagram",
+      href: "https://zhaihengyue.com/",
+      iconClass: "fa-solid fa-monument",
       label: "Instagram",
     },
     {
-      href: "https://www.facebook.com/profile.php?id=100008219289665",
-      iconClass: "fab fa-facebook-f",
+      href: "https://www.northeastern.edu/",
+      iconClass: "fa fa-university",
       label: "Facebook",
     },
     {
-      href: "https://github.com/lhq5520",
+      href: "https://github.com/lhq5520/Blog-React",
       iconClass: "fab fa-github",
       label: "GitHub",
     },
@@ -39,7 +39,7 @@ const Footer = () => {
             </ul>
             {/* Copyright */}
             <div className="small text-center text-muted fst-italic">
-              Copyright &copy; {new Date().getFullYear()} Weifan Website
+              Copyright &copy; {new Date().getFullYear()} Bytes Odyssey Website
             </div>
           </div>
         </div>
