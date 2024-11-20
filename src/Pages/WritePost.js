@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
 import PageHeader from "../components/PageHeader";
+import { createPost } from "../api/api"; // API function to handle post creation
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-const CreatePost = () => {
+const WritePost = () => {
   const [formData, setFormData] = useState({
     title: "",
     subtitle: "",
@@ -21,11 +22,26 @@ const CreatePost = () => {
     setFormData({ ...formData, content: data });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-    // Add API call or further submission logic here
+  
+    // Validate that all fields are filled
+    if (!formData.title.trim() || !formData.subtitle.trim() || !formData.content.trim()) {
+      alert("All fields (Title, Subtitle, and Content) are required.");
+      return;
+    }
+  
+    try {
+      const newPost = await createPost(formData);
+      console.log("Post created:", newPost);
+      setFormData({ title: "", subtitle: "", content: "" });
+      alert("Post created successfully!");
+    } catch (error) {
+      console.error("Error creating post:", error);
+      alert("Failed to create post.");
+    }
   };
+  
 
   return (
     <Layout>
@@ -35,42 +51,50 @@ const CreatePost = () => {
         backgroundImage="/static/img/write.jpeg"
       />
 
-      <div className="container position-relative px-4 px-lg-5">
-        <div className="d-flex justify-content-end mb-4">
-          <a href="/logout" className="btn btn-link">Log Out</a>
+      <div className="container mt-5" style={{ maxWidth: "900px" }}>
+        <div className="d-flex justify-content-end mb-3">
+          <a href="/logout" className="btn btn-outline-secondary">Log Out</a>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          {/* Title Field */}
-          <div className="mb-3">
-            <label htmlFor="title" className="form-label">Title:</label>
-            <input
-              className="form-control form-control-lg"
-              type="text"
-              name="title"
-              id="title"
-              value={formData.title}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          {/* Subtitle Field */}
-          <div className="mb-3">
-            <label htmlFor="subtitle" className="form-label">Subtitle:</label>
-            <input
-              className="form-control form-control-lg"
-              type="text"
-              name="subtitle"
-              id="subtitle"
-              value={formData.subtitle}
-              onChange={handleChange}
-              required
-            />
+        <form
+          onSubmit={handleSubmit}
+          className="bg-light p-5 rounded shadow-lg"
+          style={{
+            width: "100%",
+          }}
+        >
+          {/* Title and Subtitle Fields */}
+          <div className="row mb-4">
+            <div className="col-md-12 mb-3">
+              <label htmlFor="title" className="form-label">Title:</label>
+              <input
+                className="form-control form-control-lg"
+                type="text"
+                name="title"
+                id="title"
+                placeholder="Enter the title"
+                value={formData.title}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="col-md-12 mb-3">
+              <label htmlFor="subtitle" className="form-label">Subtitle:</label>
+              <input
+                className="form-control form-control-lg"
+                type="text"
+                name="subtitle"
+                id="subtitle"
+                placeholder="Enter the subtitle"
+                value={formData.subtitle}
+                onChange={handleChange}
+                required
+              />
+            </div>
           </div>
 
           {/* Content Field with CKEditor */}
-          <div className="mb-3">
+          <div className="mb-4">
             <label htmlFor="content" className="form-label">Content:</label>
             <CKEditor
               editor={ClassicEditor}
@@ -80,8 +104,10 @@ const CreatePost = () => {
           </div>
 
           {/* Submit Button */}
-          <div className="d-flex justify-content-end mb-4">
-            <button className="btn btn-primary" type="submit">Post</button>
+          <div className="text-end">
+            <button className="btn btn-primary px-5 py-2" type="submit">
+              Post
+            </button>
           </div>
         </form>
       </div>
@@ -89,4 +115,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default WritePost;

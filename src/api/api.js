@@ -1,8 +1,43 @@
-import axios from "axios";
+const API_URL = "http://localhost:5000/api/posts";
 
-const API = axios.create({ baseURL: "http://localhost:5000" }); // Replace with your backend URL
+export const fetchPosts = async () => {
+  const response = await fetch(API_URL);
+  return response.json();
+};
 
-export const fetchPosts = () => API.get("/posts");
-export const createPost = (newPost) => API.post("/posts", newPost);
-export const updatePost = (id, updatedPost) => API.put(`/posts/${id}`, updatedPost);
-export const deletePost = (id) => API.delete(`/posts/${id}`);
+export const fetchLimitedPosts = async () => {
+  const response = await fetch(`${API_URL}/limited`);
+  return response.json();
+};
+
+export const fetchSinglePost = async (id) => {
+  const response = await fetch(`${API_URL}/${id}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch the blog");
+  }
+  return response.json();
+};
+
+
+export const createPost = async (post) => {
+  const response = await fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(post),
+  });
+  return response.json();
+};
+
+export const updatePost = async (id, post) => {
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(post),
+  });
+  return response.json();
+};
+
+export const deletePost = async (id) => {
+  await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+};
+
