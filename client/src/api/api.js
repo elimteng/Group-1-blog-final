@@ -1,4 +1,10 @@
-const API_URL = "http://localhost:5000/api/posts";
+const API_URL = process.env.REACT_APP_API_URL;
+
+// Check if API_URL is defined
+if (!API_URL) {
+  console.error("Error: API_URL is not defined in your environment variables.");
+  process.exit(1); // Exit the process with an error code
+}
 
 export const fetchPosts = async () => {
   const response = await fetch(API_URL);

@@ -30,5 +30,5 @@ const postRoutes = require("./routes/postRoutes");
 app.use("/api/posts", postRoutes);
 
 // Start Server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

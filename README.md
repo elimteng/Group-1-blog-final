@@ -1,3 +1,5 @@
+
+
 # **Blog Project**
 
 Welcome to our blog platform! This project is a modern, dynamic blogging application designed to create, view, edit, and manage posts with ease. Built using **React**, **MongoDB**, and a robust API, this platform offers a seamless experience for users to explore and share content.
@@ -30,12 +32,12 @@ Welcome to our blog platform! This project is a modern, dynamic blogging applica
 
 ```bash
 git clone https://github.com/your-repo/blog-project.git
-cd blog-project
+cd blog-react
 ```
 
 ### **2. Install Dependencies**
 
-Run the following command in the project root:
+Run the following command in the project root (if run this command in root file won't start, please go to `client` and `server` to run this command respectively in addition to run this in root directory. ):
 
 ```bash
 npm install 
@@ -43,11 +45,17 @@ npm install
 
 ### **3. Set Up Environment Variables**
 
-Create a `.env` file in the `src/server` directory and add the following:
+Create a `.env` file in the `server` directory and add the following:
 
 ```env
 MONGO_URI=your_mongodb_connection_string
-PORT=5000
+PORT=5001
+```
+
+Create a `.env` file in the `client` directory and add the following:
+
+```env
+REACT_APP_API_URL=http://localhost:5001/api/posts
 ```
 
 ### **4. Start the Application**
@@ -58,7 +66,7 @@ Use the following command to start both the client and server:
 npm start
 ```
 
-The React app will be available at `http://localhost:3000` and the backend API at `http://localhost:5000`.
+The React app will be available at `http://localhost:3000` and the backend API at `http://localhost:5001`.
 
 ------
 
@@ -76,51 +84,55 @@ The React app will be available at `http://localhost:3000` and the backend API a
 
 ```
 Blog-React
-├─ 📁public
-│  ├─ 📁static
-│  │  └─ 📁img
-│  │     ├─ 📄about-bg.jpg
-│  │     ├─ 📄antique.jpeg
-│  │     ├─ 📄bently.jpeg
-│  │     ├─ 📄computer.jpg
-│  │     ├─ 📄contact-bg.jpg
-│  │     ├─ 📄favicon.ico
-│  │     ├─ 📄home-bg.jpg
-│  │     ├─ 📄post-bg.jpg
-│  │     ├─ 📄post-sample-image.jpg
-│  │     ├─ 📄read.jpeg
-│  │     ├─ 📄statue-of-liberty.png
-│  │     ├─ 📄vechicle.jpg
-│  │     └─ 📄write.jpeg
-│  └─ 📄index.html
-├─ 📁src
-│  ├─ 📁api
-│  │  └─ 📄api.js
-│  ├─ 📁components
-│  │  ├─ 📄Blog.js
-│  │  ├─ 📄Blogs.js
-│  │  ├─ 📄Footer.js
-│  │  ├─ 📄Layout.js
-│  │  ├─ 📄Navbar.js
-│  │  └─ 📄PageHeader.js
-│  ├─ 📁Pages
-│  │  ├─ 📄About.js
-│  │  ├─ 📄Contact.js
-│  │  ├─ 📄Home.js
-│  │  └─ 📄WritePost.js
-│  ├─ 📁server
-│  │  ├─ 📁models
-│  │  │  └─ 📄Post.js
-│  │  ├─ 📁routes
-│  │  │  └─ 📄postRoutes.js
-│  │  └─ 📄server.js
-│  ├─ 📄App.css
-│  ├─ 📄App.js
-│  └─ 📄index.js
+├─ 📁client
+│  ├─ 📁public
+│  │  ├─ 📁static
+│  │  │  └─ 📁img
+│  │  │     ├─ 📄about-bg.jpg
+│  │  │     ├─ 📄antique.jpeg
+│  │  │     ├─ 📄bently.jpeg
+│  │  │     ├─ 📄computer.jpg
+│  │  │     ├─ 📄contact-bg.jpg
+│  │  │     ├─ 📄favicon.ico
+│  │  │     ├─ 📄home-bg.jpg
+│  │  │     ├─ 📄post-bg.jpg
+│  │  │     ├─ 📄post-sample-image.jpg
+│  │  │     ├─ 📄read.jpeg
+│  │  │     ├─ 📄statue-of-liberty.png
+│  │  │     ├─ 📄vechicle.jpg
+│  │  │     └─ 📄write.jpeg
+│  │  └─ 📄index.html
+│  ├─ 📁src
+│  │  ├─ 📁Pages
+│  │  │  ├─ 📄About.js
+│  │  │  ├─ 📄Contact.js
+│  │  │  ├─ 📄Home.js
+│  │  │  └─ 📄WritePost.js
+│  │  ├─ 📁api
+│  │  │  └─ 📄api.js
+│  │  ├─ 📁components
+│  │  │  ├─ 📄Blog.js
+│  │  │  ├─ 📄Blogs.js
+│  │  │  ├─ 📄Footer.js
+│  │  │  ├─ 📄Layout.js
+│  │  │  ├─ 📄Navbar.js
+│  │  │  └─ 📄PageHeader.js
+│  │  ├─ 📄App.css
+│  │  ├─ 📄App.js
+│  │  └─ 📄index.js
+│  ├─ 📄package-lock.json
+│  └─ 📄package.json
+├─ 📁server
+│  ├─ 📁models
+│  │  └─ 📄Post.js
+│  ├─ 📁routes
+│  │  └─ 📄postRoutes.js
+│  ├─ 📄package.json
+│  └─ 📄server.js
 ├─ 📄.gitignore
+├─ 📄README.md
 ├─ 📄package-lock.json
-├─ 📄package.json
-└─ 📄README.md
+└─ 📄package.json
 ```
 
 ------

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../components/Layout";
-import PageHeader from "../components/PageHeader";
+import Layout from "./Layout";
+import PageHeader from "./PageHeader";
 import { fetchSinglePost, updatePost } from "../api/api";
 import { useParams } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";

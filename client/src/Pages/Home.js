@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import PageHeader from "../components/PageHeader";
 import Blog from "../components/Blog";
 import Footer from "../components/Footer";
-import { fetchLimitedPosts, updatePost, deletePost } from "../api/api";
+import { fetchLimitedPosts, deletePost } from "../api/api";
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
@@ -23,26 +23,17 @@ const Home = () => {
     loadBlogs();
   }, []);
 
-  const handleEdit = async (blog) => {
-    const newTitle = prompt("Enter new title:", blog.title);
-    const newSubtitle = prompt("Enter new subtitle:", blog.subtitle);
-    if (newTitle && newSubtitle) {
-      try {
-        const updatedBlog = await updatePost(blog._id, {
-          title: newTitle,
-          subtitle: newSubtitle,
-          content: blog.content, // Keep existing content if not editing it
-        });
-        setBlogs((prev) =>
-          prev.map((b) => (b._id === updatedBlog._id ? updatedBlog : b))
-        );
-        alert("Blog updated successfully!");
-      } catch (error) {
-        console.error("Error updating blog:", error);
-        alert("Failed to update blog.");
-      }
+  const handleEdit = (updatedBlog) => {
+    try{
+      setBlogs((prev) =>
+        prev.map((b) => (b._id === updatedBlog._id ? updatedBlog : b))
+      );
+    } catch (error) {
+      console.error("Error updating blog in Home.js:", error);
+      alert("Failed to update blog in Home.js.");
     }
   };
+  
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this blog?")) {
@@ -56,6 +47,10 @@ const Home = () => {
       }
     }
   };
+
+  
+
+  
 
   return (
     <Layout>
@@ -73,7 +68,7 @@ const Home = () => {
           blogs.map((blog) => (
             <Blog
               key={blog._id}
-              blog={blog}
+              blog={blog}  // or blog={{ ...blog, content: "" }} if doesn't want to show content after edit
               onEdit={handleEdit}
               onDelete={handleDelete}
             />

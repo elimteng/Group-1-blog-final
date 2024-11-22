@@ -4,7 +4,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { fetchSinglePost, updatePost } from "../api/api";
 
-const Blog = ({ blog, onDelete, onEditComplete }) => {
+const Blog = ({ blog, onDelete, onEdit }) => {
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
     title: blog.title,
@@ -71,7 +71,9 @@ const Blog = ({ blog, onDelete, onEditComplete }) => {
 
     try {
       const updatedBlog = await updatePost(blog._id, formData);
-      onEditComplete(updatedBlog); // Notify parent component of the changes
+      if (onEdit) {
+        onEdit(updatedBlog); // Use onEdit instead of onEditComplete
+      }
       setEditMode(false); // Exit edit mode
     } catch (error) {
       console.error("Error updating blog:", error);

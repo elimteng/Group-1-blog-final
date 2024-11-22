@@ -2,51 +2,14 @@
   "name": "blog",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^43.3.1",
-    "@ckeditor/ckeditor5-react": "^9.3.1",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "body-parser": "^1.20.3",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
-    "mongoose": "^8.8.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.28.0",
-    "react-scripts": "^5.0.1",
-    "web-vitals": "^2.1.4"
-  },
   "scripts": {
-  "start": "concurrently \"npm run client\" \"npm run server\"",
-  "client": "react-scripts start",
-  "server": "cd src/server && node server.js",
-  "build": "react-scripts build",
-  "test": "react-scripts test",
-  "eject": "react-scripts eject"
-},
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "install-all": "npm install --prefix client && npm install --prefix server",
+    "client": "npm start --prefix client",
+    "server": "npm run dev --prefix server",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "npm run build --prefix client"
   },
   "devDependencies": {
-    "concurrently": "^9.1.0",
-    "nodemon": "^3.1.7"
+    "concurrently": "^9.1.0"
   }
 }
