@@ -85,6 +85,7 @@ The React app will be available at `http://localhost:3000` and the backend API a
 ```
 Blog-React
 ├─ 📁client
+│  ├─ 📁node_modules
 │  ├─ 📁public
 │  │  ├─ 📁static
 │  │  │  └─ 📁img
@@ -120,13 +121,17 @@ Blog-React
 │  │  ├─ 📄App.css
 │  │  ├─ 📄App.js
 │  │  └─ 📄index.js
+│  ├─ 📄.env
 │  ├─ 📄package-lock.json
 │  └─ 📄package.json
 ├─ 📁server
 │  ├─ 📁models
 │  │  └─ 📄Post.js
+│  ├─ 📁node_modules
 │  ├─ 📁routes
 │  │  └─ 📄postRoutes.js
+│  ├─ 📄.env
+│  ├─ 📄package-lock.json
 │  ├─ 📄package.json
 │  └─ 📄server.js
 ├─ 📄.gitignore
