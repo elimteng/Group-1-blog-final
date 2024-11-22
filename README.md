@@ -37,7 +37,7 @@ cd blog-react
 
 ### **2. Install Dependencies**
 
-Run the following command in the project root (if run this command in root file won't start, please go to `client` and `server` to run this command respectively in addition to run this in root directory. ):
+Run the following command in the project root:
 
 ```bash
 npm install 
