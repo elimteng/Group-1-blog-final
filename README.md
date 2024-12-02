@@ -1,10 +1,8 @@
-
-
 # **Blog Project**
 
 Welcome to our blog platform! This project is a modern, dynamic blogging application designed to create, view, edit, and manage posts with ease. Built using **React**, **MongoDB**, and a robust API, this platform offers a seamless experience for users to explore and share content.
 
-------
+---
 
 ## **Features**
 
@@ -15,7 +13,7 @@ Welcome to our blog platform! This project is a modern, dynamic blogging applica
 - **Responsive Design**: Accessible and optimized for all screen sizes.
 - **Real-Time Validation**: Ensures all fields are filled before submission.
 
-------
+---
 
 ## **Technologies Used**
 
@@ -24,7 +22,7 @@ Welcome to our blog platform! This project is a modern, dynamic blogging applica
 - **Styling**: Bootstrap and custom CSS
 - **Development Tools**: Concurrently, Nodemon
 
-***
+---
 
 ## **How to Use**
 
@@ -40,7 +38,7 @@ cd blog-react
 Run the following command in the project root:
 
 ```bash
-npm install 
+npm install
 ```
 
 ### **3. Set Up Environment Variables**
@@ -50,12 +48,14 @@ Create a `.env` file in the `server` directory and add the following:
 ```env
 MONGO_URI=your_mongodb_connection_string
 PORT=5001
+JWT_SECRET=Your_Secret_Code
+JWT_EXPIRES_IN=1d
 ```
 
 Create a `.env` file in the `client` directory and add the following:
 
 ```env
-REACT_APP_API_URL=http://localhost:5001/api/posts
+REACT_APP_API_URL=http://localhost:5001/
 ```
 
 ### **4. Start the Application**
@@ -68,7 +68,7 @@ npm start
 
 The React app will be available at `http://localhost:3000` and the backend API at `http://localhost:5001`.
 
-------
+---
 
 ## **Expected Behavior**
 
@@ -78,7 +78,7 @@ The React app will be available at `http://localhost:3000` and the backend API a
 - **Edit Post**: Enter edit mode from the homepage or single post view to update content.
 - **Delete Post**: Remove unwanted posts with a single click.
 
-------
+---
 
 ## **Folder Structure**
 
@@ -140,7 +140,7 @@ Blog-React
 └─ 📄package.json
 ```
 
-------
+---
 
 ## **Contributing**
 
@@ -150,7 +150,7 @@ We welcome contributions! If you'd like to enhance the project:
 2. Create a new branch for your feature/bugfix.
 3. Submit a pull request.
 
-------
+---
 
 ## **License**
 
