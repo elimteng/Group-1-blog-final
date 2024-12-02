@@ -27,7 +27,9 @@ mongoose
 
 // Routes
 const postRoutes = require("./routes/postRoutes");
+const authRoutes = require("./routes/authRoutes"); // New authentication routes
 app.use("/api/posts", postRoutes);
+app.use("/api/auth", authRoutes); // Mount auth routes
 
 // Start Server
 const PORT = process.env.PORT || 5001;

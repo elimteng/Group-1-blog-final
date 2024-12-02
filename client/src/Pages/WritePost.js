@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; 
 import Layout from "../components/Layout";
 import PageHeader from "../components/PageHeader";
-import { createPost } from "../api/api"; // API function to handle post creation
+import { createPost } from "../api/api"; 
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { useAuth } from "../context/AuthContext";  
 
 const WritePost = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +13,15 @@ const WritePost = () => {
     subtitle: "",
     content: "",
   });
+  const [error, setError] = useState(""); 
+  const { user, logout, authLoading } = useAuth();  
+  const navigate = useNavigate();  
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate("/login");
+    }
+  }, [user, authLoading, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,24 +35,33 @@ const WritePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Validate that all fields are filled
+
     if (!formData.title.trim() || !formData.subtitle.trim() || !formData.content.trim()) {
-      alert("All fields (Title, Subtitle, and Content) are required.");
+      setError("All fields (Title, Subtitle, and Content) are required.");
       return;
     }
-  
+
     try {
       const newPost = await createPost(formData);
       console.log("Post created:", newPost);
+
       setFormData({ title: "", subtitle: "", content: "" });
+      setError(""); 
       alert("Post created successfully!");
     } catch (error) {
       console.error("Error creating post:", error);
       alert("Failed to create post.");
     }
   };
-  
+
+  const handleLogout = () => {
+    logout(); 
+    navigate("/login"); 
+  };
+
+  if (authLoading) {
+    return <div>Loading...</div>;  // You can display a loading indicator while auth is being checked
+  }
 
   return (
     <Layout>
@@ -53,7 +73,7 @@ const WritePost = () => {
 
       <div className="container mt-5" style={{ maxWidth: "900px" }}>
         <div className="d-flex justify-content-end mb-3">
-          <a href="/logout" className="btn btn-outline-secondary">Log Out</a>
+          <button onClick={handleLogout} className="btn btn-outline-secondary">Log Out</button>
         </div>
 
         <form
@@ -63,7 +83,8 @@ const WritePost = () => {
             width: "100%",
           }}
         >
-          {/* Title and Subtitle Fields */}
+          {error && <div className="alert alert-danger">{error}</div>}
+
           <div className="row mb-4">
             <div className="col-md-12 mb-3">
               <label htmlFor="title" className="form-label">Title:</label>
@@ -93,7 +114,6 @@ const WritePost = () => {
             </div>
           </div>
 
-          {/* Content Field with CKEditor */}
           <div className="mb-4">
             <label htmlFor="content" className="form-label">Content:</label>
             <CKEditor
@@ -103,7 +123,6 @@ const WritePost = () => {
             />
           </div>
 
-          {/* Submit Button */}
           <div className="text-end">
             <button className="btn btn-primary px-5 py-2" type="submit">
               Post

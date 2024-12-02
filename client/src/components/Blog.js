@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { fetchSinglePost, updatePost } from "../api/api";
+import { fetchSinglePost, updatePost, deletePost } from "../api/api";
+
+// Utility function to get JWT token from localStorage
+const getAuthToken = () => {
+  return localStorage.getItem("token");
+};
 
 const Blog = ({ blog, onDelete, onEdit }) => {
   const [editMode, setEditMode] = useState(false);
@@ -98,6 +103,22 @@ const Blog = ({ blog, onDelete, onEdit }) => {
     setEditMode(true);
   };
 
+  const handleDelete = async () => {
+    const token = getAuthToken(); // Get the token
+    if (!token) {
+      alert("You need to be logged in to delete a post.");
+      return;
+    }
+
+    try {
+      await deletePost(blog._id, token); // Pass the token to deletePost
+      onDelete(blog._id); // Update the parent component's state to remove the post
+    } catch (error) {
+      console.error("Error deleting blog:", error);
+      alert("Failed to delete blog.");
+    }
+  };
+
   return (
     <div className="blog-item border-bottom py-3">
       {editMode ? (
@@ -170,7 +191,7 @@ const Blog = ({ blog, onDelete, onEdit }) => {
             <button className="btn btn-primary btn-sm" onClick={enterEditMode}>
               Edit
             </button>
-            <button className="btn btn-danger btn-sm" onClick={() => onDelete(blog._id)}>
+            <button className="btn btn-danger btn-sm" onClick={handleDelete}>
               Delete
             </button>
           </div>

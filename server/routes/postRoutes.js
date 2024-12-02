@@ -1,19 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../models/Post");
+const verifyToken = require("./authMiddleware"); // Use middleware
 
-//CRUD operations:
-// Create a blog post
-router.post("/", async (req, res) => {
+// Create a new post (user-specific)
+router.post("/", verifyToken, async (req, res) => {
   const { title, subtitle, content } = req.body;
 
-  // Validate input fields
   if (!title || !subtitle || !content) {
-    return res.status(400).json({ error: "All fields (Title, Subtitle, and Content) are required." });
+    return res.status(400).json({ error: "All fields are required." });
   }
 
   try {
-    const newPost = new Post({ title, subtitle, content });
+    const newPost = new Post({
+      title,
+      subtitle,
+      content,
+      userId: req.user.id, // Link to the authenticated user
+    });
     await newPost.save();
     res.status(201).json(newPost);
   } catch (error) {
@@ -21,74 +25,106 @@ router.post("/", async (req, res) => {
   }
 });
 
-
-// Create a new post
-router.post("/", async (req, res) => {
+// Get all posts for the logged-in user
+router.get("/", verifyToken, async (req, res) => {
   try {
-    const { title, subtitle, content } = req.body;
-    const newPost = new Post({ title, subtitle, content });
-    await newPost.save();
-    res.status(201).json(newPost);
+    const posts = await Post.find({ userId: req.user.id }); // Fetch posts for the user
+    res.json(posts);
   } catch (error) {
-    res.status(500).json({ error: "Failed to create post" });
+    res.status(500).json({ error: "Failed to fetch posts" });
   }
 });
 
-// Update a blog post
-router.put("/:id", async (req, res) => {
+
+// Get a single blog post by its _id
+router.get("/:id", verifyToken, async (req, res) => {
+  const { id } = req.params; // Extract blog ID from the route parameter
+
+  try {
+    const post = await Post.findOne({ _id: id, userId: req.user.id }); // Ensure the post belongs to the user
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+    res.json(post);
+  } catch (error) {
+    console.error("Error fetching the post:", error);
+    res.status(500).json({ error: "Failed to fetch the post" });
+  }
+});
+
+// // Search posts by title or content
+// router.get("/search", verifyToken, async (req, res) => {
+//   const { q } = req.query; // Extract the search query from the URL
+
+//   if (!q) {
+//     return res.status(400).json({ error: "Search query is required." });
+//   }
+
+//   try {
+//     const posts = await Post.find({
+//       userId: req.user.id, // Ensure the user owns the posts
+//       $or: [
+//         { title: { $regex: q, $options: "i" } }, // Case-insensitive match for title
+//         { content: { $regex: q, $options: "i" } }, // Case-insensitive match for content
+//       ],
+//     });
+
+//     res.json(posts);
+//   } catch (error) {
+//     console.error("Error searching posts:", error);
+//     res.status(500).json({ error: "Failed to search posts." });
+//   }
+// });
+
+
+
+// Update a post (PUT /posts/:id)
+router.put("/:id", verifyToken, async (req, res) => {
   const { title, subtitle, content } = req.body;
 
-  // Validate input fields
   if (!title || !subtitle || !content) {
-    return res.status(400).json({ error: "All fields (Title, Subtitle, and Content) are required." });
+    return res.status(400).json({ error: "All fields are required." });
   }
 
   try {
-    const { id } = req.params;
-    const updatedPost = await Post.findByIdAndUpdate(
-      id,
+    const updatedPost = await Post.findOneAndUpdate(
+      { _id: req.params.id, userId: req.user.id }, // Ensure user owns the post
       { title, subtitle, content },
-      { new: true } // Return the updated document
+      { new: true } // Return updated document
     );
+
+    if (!updatedPost) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
     res.json(updatedPost);
   } catch (error) {
-    res.status(500).json({ error: "Failed to update post" });
+    console.error("Error updating post:", error);
+    res.status(500).json({ error: "Failed to update post." });
   }
 });
 
 
-// Delete a post
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", verifyToken, async (req, res) => {
   try {
-    const { id } = req.params;
-    await Post.findByIdAndDelete(id);
+    const deletedPost = await Post.findOneAndDelete({
+      _id: req.params.id, // The ID from the request URL
+      userId: req.user.id, // Ensure the user owns the post
+    });
+
+    if (!deletedPost) {
+      // Return 404 if the post was not found
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    // Return 204 No Content for successful deletion
     res.status(204).send();
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete post" });
+    console.error("Error deleting post:", error);
+    res.status(500).json({ error: "Failed to delete post." });
   }
 });
 
-
-//For show blogs in Home Page:
-// Fetch limited fields for Home.js
-router.get("/limited", async (req, res) => {
-  try {
-    const blogs = await Post.find({}, "title subtitle createdAt"); // Fetch only specific fields
-    res.json(blogs);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch blogs" });
-  }
-});
-
-// Fetch full content for Blogs.js
-router.get("/:id", async (req, res) => {
-  try {
-    const blog = await Post.findById(req.params.id);
-    res.json(blog);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch the blog" });
-  }
-});
 
 
 module.exports = router;

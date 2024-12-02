@@ -5,6 +5,7 @@ const PostSchema = new mongoose.Schema({
   subtitle: { type: String, required: true },
   content: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // Link to User
 });
 
 module.exports = mongoose.model("Post", PostSchema);

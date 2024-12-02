@@ -16,6 +16,7 @@ const Blogs = () => {
     subtitle: "",
     content: "",
   });
+  const [errors, setErrors] = useState({}); // Track validation errors
 
   // Load the blog when the component mounts
   useEffect(() => {
@@ -23,7 +24,11 @@ const Blogs = () => {
       try {
         const data = await fetchSinglePost(id);
         setBlog(data);
-        setFormData({ title: data.title, subtitle: data.subtitle, content: data.content });
+        setFormData({
+          title: data.title,
+          subtitle: data.subtitle,
+          content: data.content,
+        });
       } catch (error) {
         console.error("Error fetching blog:", error);
       } finally {
@@ -37,19 +42,36 @@ const Blogs = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: value.trim() ? "" : `${name.charAt(0).toUpperCase() + name.slice(1)} is required.`,
+    }));
   };
 
   // Handle CKEditor changes
   const handleEditorChange = (event, editor) => {
     const data = editor.getData();
     setFormData({ ...formData, content: data });
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      content: data.trim() ? "" : "Content is required.",
+    }));
+  };
+
+  // Validate the form fields before saving
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.title.trim()) newErrors.title = "Title is required.";
+    if (!formData.subtitle.trim()) newErrors.subtitle = "Subtitle is required.";
+    if (!formData.content.trim()) newErrors.content = "Content is required.";
+    return newErrors;
   };
 
   // Save the updated blog
   const handleSave = async () => {
-    // Validate that all fields are filled
-    if (!formData.title.trim() || !formData.subtitle.trim() || !formData.content.trim()) {
-      alert("All fields (Title, Subtitle, and Content) are required.");
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
   
@@ -63,7 +85,6 @@ const Blogs = () => {
       alert("Failed to update blog.");
     }
   };
-  
 
   // Cancel edit mode
   const handleCancel = () => {
@@ -98,6 +119,7 @@ const Blogs = () => {
                       className="form-control"
                       required
                     />
+                    {errors.title && <p className="text-danger">{errors.title}</p>}
                   </div>
                   <div className="mb-3">
                     <label htmlFor="subtitle" className="form-label">Subtitle:</label>
@@ -110,6 +132,7 @@ const Blogs = () => {
                       className="form-control"
                       required
                     />
+                    {errors.subtitle && <p className="text-danger">{errors.subtitle}</p>}
                   </div>
                   <div className="mb-3">
                     <label htmlFor="content" className="form-label">Content:</label>
@@ -118,6 +141,7 @@ const Blogs = () => {
                       data={formData.content}
                       onChange={handleEditorChange}
                     />
+                    {errors.content && <p className="text-danger">{errors.content}</p>}
                   </div>
                   <div className="d-flex gap-2">
                     <button
