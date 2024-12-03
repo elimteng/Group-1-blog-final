@@ -285,3 +285,27 @@ export const postNewGuestbookEntry = async (content) => {
     throw error;
   }
 };
+
+
+export const fetchUserProfile = async () => {
+
+  const API_URL = process.env.REACT_APP_API_URL; // Your backend URL
+  const token = localStorage.getItem("token"); // Retrieve the JWT token from localStorage
+
+
+  if (!token) throw new Error("No authentication token found");
+
+  const response = await fetch(`${API_URL}/api/profile`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`, // Include the token for authentication
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch current user: ${response.statusText}`);
+  }
+
+  return await response.json(); // Return the user details
+};

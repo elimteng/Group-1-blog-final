@@ -1,6 +1,6 @@
 // Home.js
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Layout from "../components/Layout";
 import PageHeader from "../components/PageHeader";
 import Footer from "../components/Footer";
@@ -70,13 +70,13 @@ const Home = () => {
     <Layout>
       <PageHeader
         title="Bytes Odyssey"
-        subtitle="A Blog Platform About Life and Code"
+        subtitle={<Link to="/profile" class = "text-white"> Click Here To View Profile</Link>}
         backgroundImage="/static/img/vechicle.jpg"
       />
       <div className="d-flex justify-content-end mb-3">
         <button onClick={handleLogout} className="btn btn-outline-secondary">Log Out</button>
       </div>
-      
+
       <section className="container mt-4">
         {authLoading ? (
           <p>Loading authentication...</p>

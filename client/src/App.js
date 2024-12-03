@@ -10,6 +10,7 @@ import Register from "./Pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext"; 
 import GuestbookPage from "./Pages/GuestbookPage";
+import ProfilePage from "./Pages/ProfilePage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/blogs/:id" element={<Blogs />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<ProfilePage />} />
           
           {/* Private Route - Requires Authentication */}
           <Route
