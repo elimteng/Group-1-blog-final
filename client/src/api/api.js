@@ -195,7 +195,6 @@ export const updatePost = async (id, post) => {
 };
 
 
-
 export const deletePost = async (id) => {
   const API_URL = process.env.REACT_APP_API_URL;
 
@@ -229,4 +228,60 @@ export const deletePost = async (id) => {
 };
 
 
+export const fetchGuestbookEntries = async () => {
+  const API_URL = process.env.REACT_APP_API_URL;
 
+  if (!API_URL) {
+    throw new Error("API_URL is not defined. Check your environment variables.");
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/api/guestbook`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json", // Set Content-Type
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch guestbook entries: ${response.statusText}`);
+    }
+
+    return await response.json(); // Parse and return the JSON response
+  } catch (error) {
+    console.error("Error in fetchGuestbookEntries:", error);
+    throw error;
+  }
+};
+
+
+export const postNewGuestbookEntry = async (content) => {
+  const API_URL = process.env.REACT_APP_API_URL;
+
+  if (!API_URL) {
+    throw new Error("API_URL is not defined. Check your environment variables.");
+  }
+
+  if (!content) {
+    throw new Error("Content is required to post a message.");
+  }
+
+  try {
+    const response = await fetch(`${API_URL}/api/guestbook`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // Set Content-Type
+      },
+      body: JSON.stringify({ content }), // Send the content in the body
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to post guestbook entry: ${response.statusText}`);
+    }
+
+    return await response.json(); // Return the new entry's data
+  } catch (error) {
+    console.error("Error in postNewGuestbookEntry:", error);
+    throw error;
+  }
+};

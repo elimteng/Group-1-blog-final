@@ -26,10 +26,12 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 // Routes
-const postRoutes = require("./routes/postRoutes");
+const postRoutes = require("./routes/postRoutes"); 
 const authRoutes = require("./routes/authRoutes"); // New authentication routes
+const guessbook = require("./routes/guessBookRoutes"); // Guest Book routes
 app.use("/api/posts", postRoutes);
 app.use("/api/auth", authRoutes); // Mount auth routes
+app.use("/api/guestbook", guessbook); 
 
 // Start Server
 const PORT = process.env.PORT || 5001;

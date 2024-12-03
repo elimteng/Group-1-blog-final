@@ -8,7 +8,8 @@ import WritePost from "./Pages/WritePost";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { AuthProvider } from "./context/AuthContext";  // Import your AuthProvider
+import { AuthProvider } from "./context/AuthContext"; 
+import GuestbookPage from "./Pages/GuestbookPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
+          <Route path="/guessbook" element={<GuestbookPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/blogs/:id" element={<Blogs />} />

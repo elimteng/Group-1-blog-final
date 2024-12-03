@@ -3,8 +3,8 @@ import React from "react";
 const Footer = () => {
   const socialLinks = [
     {
-      href: "https://zhaihengyue.com/",
-      iconClass: "fa-solid fa-monument",
+      href: "https://getbootstrap.com/",
+      iconClass: "fa-brands fa-bootstrap",
       label: "Instagram",
     },
     {

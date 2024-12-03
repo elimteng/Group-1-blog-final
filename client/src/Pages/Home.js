@@ -26,7 +26,7 @@ const Home = () => {
           console.error("Error fetching user blogs:", error);
         }
       } else {
-        navigate("/login"); // Redirect to login page if not logged in
+        navigate("/guessbook"); // Redirect to visitor page if not logged in
       }
       setLoading(false);
     };
