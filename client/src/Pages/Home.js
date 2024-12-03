@@ -1,6 +1,7 @@
 // Home.js
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+// import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
 import PageHeader from "../components/PageHeader";
 import Footer from "../components/Footer";
@@ -13,7 +14,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   // Step 1: Get the user data from context
-  const { user, authLoading, logout } = useAuth();
+  const { user, authLoading} = useAuth();
   const navigate = useNavigate(); 
 
   useEffect(() => {
@@ -61,20 +62,20 @@ const Home = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login"); 
-  };
+  // const handleLogout = () => {
+  //   logout();
+  //   navigate("/login");
+  // };
 
   return (
     <Layout>
       <PageHeader
         title="Bytes Odyssey"
-        subtitle={<Link to="/profile" class = "text-white"> Click Here To View Profile</Link>}
+        // subtitle={<Link to="/profile" class = "text-white"> Click Here To View Profile</Link>}
         backgroundImage="/static/img/vechicle.jpg"
       />
       <div className="d-flex justify-content-end mb-3">
-        <button onClick={handleLogout} className="btn btn-outline-secondary">Log Out</button>
+        {/*<button onClick={handleLogout} className="btn btn-outline-secondary">Log Out</button>*/}
       </div>
 
       <section className="container mt-4">

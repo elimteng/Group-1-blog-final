@@ -309,3 +309,4 @@ export const fetchUserProfile = async () => {
 
   return await response.json(); // Return the user details
 };
+

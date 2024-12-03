@@ -14,7 +14,7 @@ const WritePost = () => {
     content: "",
   });
   const [error, setError] = useState(""); 
-  const { user, logout, authLoading } = useAuth();  
+  const { user, authLoading } = useAuth();
   const navigate = useNavigate();  
 
   useEffect(() => {
@@ -54,10 +54,10 @@ const WritePost = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout(); 
-    navigate("/login"); 
-  };
+  // const handleLogout = () => {
+  //   logout();
+  //   navigate("/login");
+  // };
 
   if (authLoading) {
     return <div>Loading...</div>;  // You can display a loading indicator while auth is being checked
@@ -73,7 +73,7 @@ const WritePost = () => {
 
       <div className="container mt-5" style={{ maxWidth: "900px" }}>
         <div className="d-flex justify-content-end mb-3">
-          <button onClick={handleLogout} className="btn btn-outline-secondary">Log Out</button>
+          {/*<button onClick={handleLogout} className="btn btn-outline-secondary">Log Out</button>*/}
         </div>
 
         <form
