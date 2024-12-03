@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { fetchSinglePost, updatePost, deletePost } from "../api/api";
-
-// Utility function to get JWT token from localStorage
-const getAuthToken = () => {
-  return localStorage.getItem("token");
-};
+import { fetchSinglePost, updatePost } from "../api/api";
 
 const Blog = ({ blog, onDelete, onEdit }) => {
   const [editMode, setEditMode] = useState(false);
@@ -103,21 +98,9 @@ const Blog = ({ blog, onDelete, onEdit }) => {
     setEditMode(true);
   };
 
-  const handleDelete = async () => {
-    const token = getAuthToken(); // Get the token
-    if (!token) {
-      alert("You need to be logged in to delete a post.");
-      return;
-    }
-
-    try {
-      await deletePost(blog._id, token); // Pass the token to deletePost
-      onDelete(blog._id); // Update the parent component's state to remove the post
-    } catch (error) {
-      console.error("Error deleting blog:", error);
-      alert("Failed to delete blog.");
-    }
-  };
+  const handleDelete = () => {
+    onDelete(blog._id); // Call the parent component's delete handler
+    };
 
   return (
     <div className="blog-item border-bottom py-3">

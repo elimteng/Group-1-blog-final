@@ -1,5 +1,6 @@
+// Home.js
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
 import PageHeader from "../components/PageHeader";
 import Footer from "../components/Footer";
@@ -12,14 +13,13 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   // Step 1: Get the user data from context
-  const { user, authLoading, logout } = useAuth(); // Get user and loading state
-  const navigate = useNavigate(); // Use navigate to redirect
+  const { user, authLoading, logout } = useAuth();
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const loadBlogs = async () => {
       if (user) {
         try {
-          // Step 2: Fetch posts for the logged-in user
           const data = await fetchPosts(user.id); // Fetch posts based on user.id
           setBlogs(data);
         } catch (error) {
@@ -31,10 +31,10 @@ const Home = () => {
       setLoading(false);
     };
 
-    if (!authLoading) { // Only load blogs after auth check is done
+    if (!authLoading) {
       loadBlogs();
     }
-  }, [user, authLoading, navigate]); // Re-run when user or authLoading changes
+  }, [user, authLoading, navigate]);
 
   const handleEdit = (updatedBlog) => {
     try {
@@ -42,16 +42,17 @@ const Home = () => {
         prev.map((b) => (b._id === updatedBlog._id ? updatedBlog : b))
       );
     } catch (error) {
-      console.error("Error updating blog in Home.js:", error);
-      alert("Failed to update blog in Home.js.");
+      console.error("Error updating blog:", error);
+      alert("Failed to update blog.");
     }
   };
 
+  // Handle delete logic in the parent component
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this blog?")) {
       try {
-        await deletePost(id);
-        setBlogs((prev) => prev.filter((b) => b._id !== id));
+        await deletePost(id);  // Perform the API call to delete
+        setBlogs((prev) => prev.filter((b) => b._id !== id)); // Remove blog from the state
         alert("Blog deleted successfully!");
       } catch (error) {
         console.error("Error deleting blog:", error);
@@ -61,7 +62,7 @@ const Home = () => {
   };
 
   const handleLogout = () => {
-    logout(); 
+    logout();
     navigate("/login"); 
   };
 
@@ -72,11 +73,10 @@ const Home = () => {
         subtitle="A Blog Platform About Life and Code"
         backgroundImage="/static/img/vechicle.jpg"
       />
+      <div className="d-flex justify-content-end mb-3">
+        <button onClick={handleLogout} className="btn btn-outline-secondary">Log Out</button>
+      </div>
       
-        <div className="d-flex justify-content-end mb-3">
-          <button onClick={handleLogout} className="btn btn-outline-secondary">Log Out</button>
-        </div>
-        {/* <SearchBar /> */}
       <section className="container mt-4">
         {authLoading ? (
           <p>Loading authentication...</p>
@@ -90,11 +90,12 @@ const Home = () => {
               key={blog._id}
               blog={blog}
               onEdit={handleEdit}
-              onDelete={handleDelete}
+              onDelete={handleDelete}  // Pass down the delete function as prop
             />
           ))
         )}
       </section>
+
       <Footer />
     </Layout>
   );
