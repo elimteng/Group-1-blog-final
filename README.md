@@ -38,7 +38,7 @@ cd blog-react
 Run the following command in the project root:
 
 ```bash
-npm install
+npm run install-all
 ```
 
 ### **3. Set Up Environment Variables**
