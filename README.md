@@ -140,8 +140,10 @@ Blog-React
 └─ 📄package.json
 ```
 ## **Accessibility**
-<img src="[https://static.jyshare.com/images/runoob-logo.png](https://github.com/elimteng/Group-1-blog-final/blob/main/client/public/static/img/Snipaste_2024-12-04_15-02-43.png)" width="50%">
+<img src="https://ooo.0x0.ooo/2024/12/05/OLhIXX.png" width="50%">
 
+## **Video**
+https://youtu.be/lFFj-jLwx08
 ---
 
 ## **Contributing**
