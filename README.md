@@ -139,6 +139,8 @@ Blog-React
 ├─ 📄package-lock.json
 └─ 📄package.json
 ```
+## **Accessibility**
+<img src="[https://static.jyshare.com/images/runoob-logo.png](https://github.com/elimteng/Group-1-blog-final/blob/main/client/public/static/img/Snipaste_2024-12-04_15-02-43.png)" width="50%">
 
 ---
 
